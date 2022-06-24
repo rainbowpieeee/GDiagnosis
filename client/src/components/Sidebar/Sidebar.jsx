@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./Siderbar.css"
-import Logo from "../../imgs/heart-rate-monitor.png"
+import Logo from "../../images/heart-rate-monitor.png"
 import {SidebarData} from "../../Data/Data";
 import {UilSignOutAlt} from "@iconscout/react-unicons";
 

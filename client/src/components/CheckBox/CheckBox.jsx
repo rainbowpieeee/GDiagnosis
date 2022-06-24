@@ -1,15 +1,15 @@
 import React from "react";
-
+import './CheckBox.css'
 const CheckBox = props => {
     return (
         <div className="form-group">
-            <label for={props.name} className="form-label">
+            <label for={props.name} className="form-label title">
                 {props.title}
             </label>
             <div className="checkbox">
                 {props.options.map(option => {
                     return (
-                        <label key={option} className="checkbox-inline">
+                        <label key={option} className="labels checkbox-inline">
                             <input
                                 id={props.name}
                                 name={props.name}
@@ -17,8 +17,9 @@ const CheckBox = props => {
                                 value={option}
                                 checked={props.selectedOptions.indexOf(option) > -1}
                                 type="checkbox"
+                                className='custom-checkbox'
                             />
-                            {option}
+                            <span className='spans'>{option}</span>
                         </label>
                     );
                 })}

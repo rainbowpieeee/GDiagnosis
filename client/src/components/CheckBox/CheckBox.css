@@ -1,0 +1,36 @@
+.custom-checkbox {
+    position: absolute;
+    z-index: -1;
+    width: 20px;
+    height: 20px;
+    border: 1px solid gray;
+
+}
+
+.labels {
+    font-size: 20px;
+    display: block;
+    text-align: left;
+}
+
+.labels:first-child {
+    margin-left: 10px;
+}
+
+.checkbox {
+    margin-bottom: 0.2em;
+    margin-left: 20px;
+}
+
+.spans {
+    margin-left: 10px;
+}
+
+.title {
+    font-size: 17px;
+    display: block;
+    text-align: left;
+    margin-left: 60px;
+    font-weight: 500;
+    font-style: italic;
+}

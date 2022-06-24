@@ -4,6 +4,40 @@ import Input from "../components/Input/Input";
 import TextArea from "../components/TextArea/TextArea";
 import Select from "../components/Select/Select";
 import Button from "../components/Button/Button";
+import CalculateGERD from "../components/CalculateGERD/CalculateGERD";
+import CalculateRSI from "../components/CalculateRSI/CalculateRSI";
+import './FormContainer.scss'
+import cellEditFactory,{ Type } from 'react-bootstrap-table2-editor';
+
+const data = [
+    {id: 1, name: 'Как часто Вы ощущаете изжогу (жжение за грудиной)?', value1: '0', value2: '1', value3: '2', value4: '3'},
+    {id: 2, name: 'Как часто Вы отмечали, что содержимое желудка (жидкость либо пища) ' +
+            'снова попадают в глотку или полость рта (отрыжка)?', value1: '0', value2: '1', value3: '2', value4: '3'},
+    {id: 3, name: 'Как часто Вы ощущали боль в центре верхней части живота?', value1: '3', value2: '2', value3: '1', value4: '0'},
+    {id: 4, name: 'Как часто вы ощущали тошноту?', value1: '3', value2: '2', value3: '1', value4: '0'},
+    {id: 5, name: 'Как часто изжога и/или отрыжка мешали Вам хорошо выспаться ночью?', value1: '0', value2: '1', value3: '2', value4: '3'},
+    {id: 6, name: 'Как часто по поводу изжоги и/или отрыжки Вы дополнительного принимали' +
+            ' другие средства, кроме рекомендованных врачом?', value1: '0', value2: '1', value3: '2', value4: '3'}
+];
+
+const data1 = [
+    {id: 1, name: 'Осиплость и другие проблемы с голосом',
+        editor:{
+            type:Type.SELECT,
+            options:[
+                {label: "Рубли",value:810 },
+                {label: "Доллары",value:840 },
+                {label: "Евро",value:978 },
+            ]}},
+    {id: 2, name: 'Чувство першения в горле', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 3, name: 'Чрезмерное отхаркивание слизи или затекание из носа', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 4, name: 'Затруднение при глотании пищи, жикости или таблеток', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 5, name: 'Кашель после еды или после перехода в горизонтальное положение?', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 6, name: 'Затруднения дыхания или эпизоды удушья', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 7, name: 'Мучительный или надсадный кашель', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 8, name: 'Ощущение чего-то липкого в горле или комка в горле', value: ['0', '1', '2', '3', '4', '5']},
+    {id: 9, name: 'Изжога, боль в груди, кислая отрыжка', value: ['0', '1', '2', '3', '4', '5']}
+];
 
 class FormContainer extends Component {
     constructor(props) {
@@ -22,7 +56,7 @@ class FormContainer extends Component {
             skillOptions: ["Изжога", "Отрыжка", "Дисфагия", "Срыгивание", "Загрудинная боль",
                 "Осиплость", "Тошнота", "Рвота", "Кислый привкус во рту", "Мужской пол",
                 "Ночной кашель", "Избыточный вес", "Курение", "ГЭРБ > 5 лет", "Чувство быстрого насыщения после приема пищи",
-                "GERD-Q >= 8", "RSI >= 13", "Тяжесть", "Скопление газа в желудке", "Злоупотребление алкоголем"]
+                "Тяжесть", "Скопление газа в желудке", "Злоупотребление алкоголем"]
         };
         this.handleTextArea = this.handleTextArea.bind(this);
         this.handleAge = this.handleAge.bind(this);
@@ -110,7 +144,7 @@ class FormContainer extends Component {
         e.preventDefault();
         let userData = this.state.newUser;
 
-        fetch("http://192.168.0.169:3000", {
+        fetch("http://localhost:3000", {
             method: "POST",
             body: JSON.stringify(userData),
             headers: {
@@ -139,51 +173,24 @@ class FormContainer extends Component {
 
     render() {
         return (
-            <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-                <Input
-                    inputType={"text"}
-                    title={"Полное имя"}
-                    name={"name"}
-                    value={this.state.newUser.name}
-                    placeholder={"Введите имя"}
-                    handleChange={this.handleInput}
-                />{" "}
-                {/* Имя пользователя */}
-                <Input
-                    inputType={"number"}
-                    name={"age"}
-                    title={"Возраст"}
-                    value={this.state.newUser.age}
-                    placeholder={"Введите возраст"}
-                    handleChange={this.handleAge}
-                />{" "}
-                {/* Возраст */}
-                <Select
-                    title={"Пол"}
-                    name={"gender"}
-                    options={this.state.genderOptions}
-                    value={this.state.newUser.gender}
-                    placeholder={"Выберите пол"}
-                    handleChange={this.handleInput}
-                />{" "}
-                {/* Выбор возраста */}
+            <form className="col-md-8 container-fluid" onSubmit={this.handleFormSubmit}>
                 <CheckBox
-                    title={"Симптомы"}
+                    title={"Выберите утверждение, если согласны с ним"}
                     name={"skills"}
                     options={this.state.skillOptions}
                     selectedOptions={this.state.newUser.skills}
                     handleChange={this.handleCheckBox}
                 />{" "}
                 {/* Симптомы */}
-                <TextArea
-                    title={"О вас"}
-                    rows={10}
-                    value={this.state.newUser.about}
-                    name={"currentPetInfo"}
-                    handleChange={this.handleTextArea}
-                    placeholder={"Опишите симптомы, не вошедшие в список"}
-                />
-                {/* О себе */}
+                <CalculateGERD
+                    data={data}
+                    cellEditor={cellEditFactory}
+                />{" "}
+                {/* Опросник GERD-Q */}
+                <CalculateRSI
+                    data={data1}
+                />{" "}
+                {/* Опросник RSI */}
                 <Button
                     action={this.handleFormSubmit}
                     type={"primary"}
@@ -204,7 +211,7 @@ class FormContainer extends Component {
 }
 
 const buttonStyle = {
-    margin: "10px 10px 10px 10px"
+    margin: "5px 5px 10px 10px"
 };
 
 export default FormContainer;
